@@ -195,7 +195,7 @@
             "from": "instruction",
             "to": "check_approval",
             "connection": {
-                "output": "action, requester_email",
+                "output": "approval_valid",
                 "input": "action, requester_email"
             }
             },
