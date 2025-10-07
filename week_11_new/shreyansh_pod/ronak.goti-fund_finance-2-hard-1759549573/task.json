@@ -7,7 +7,7 @@
     "interface_num": 2,
     "task": {
         "user_id": "110",
-        "instruction": "You are Cindy Alvarado (email: cindy.alvarado@investment.com). You need to perform investor offboarding for investor ID 102 (email: garcia2853@investment.com) and ensure all compliance requirements are met.",
+        "instruction": "You are Cindy Alvarado (email: cindy.alvarado@investment.com). You need to perform offboarding process for investor Garcia and Sons (email: garcia2853@investment.com) and ensure all compliance requirements are met.",
         "actions": [
             {
             "arguments": {
