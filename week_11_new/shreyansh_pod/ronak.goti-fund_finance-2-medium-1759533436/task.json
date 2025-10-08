@@ -86,8 +86,8 @@
                 "name": "Sandoval PLC Strategic Fund",
                 "size": 339204464.85,
                 "status": "closed",
-                "fund_manager_approval": "fund_management_maintenance_1",
-                "compliance_officer_approval": "fund_management_maintenance_1"
+                "fund_manager_approval": true,
+                "compliance_officer_approval": true
                 },
                 "fund_id": "77"
             },
@@ -130,73 +130,89 @@
             }
             }
         ],
-         "edges": [
-            {
-            "from": "instruction",
-            "to": "search_user_entities",
-            "connection": {
-                "output": "entity_type, email",
-                "input": "entity_type, filters.email"
-            }
-            },
-            {
-            "from": "instruction",
-            "to": "search_fund_entities",
-            "connection": {
-                "output": "entity_type, name",
-                "input": "entity_type, filters.name"
-            }
-            },
-            {
-            "from": "search_user_entities",
-            "to": "check_approval",
-            "connection": {
-                "output": "results[0].email",
-                "input": "requester_email"
-            }
-            },
-            {
-            "from": "instruction",
-            "to": "check_approval",
-            "connection": {
-                "output": "fund_management_maintenance",
-                "input": "action"
-            }
-            },
-            {
-            "from": "search_fund_entities",
-            "to": "handle_fund",
-            "connection": {
-                "output": "results[0].fund_id, results[0].fund_type, results[0].manager_id, results[0].name, results[0].size",
-                "input": "fund_id, fund_data.fund_type, fund_data.manager_id, fund_data.name, fund_data.size"
-            }
-            },
-            {
-            "from": "instruction",
-            "to": "handle_fund",
-            "connection": {
-                "output": "action, status, fund_manager_approval, compliance_officer_approval",
-                "input": "action, fund_data.status, fund_data.fund_manager_approval, fund_data.compliance_officer_approval"
-            }
-            },
-            {
-            "from": "handle_fund",
-            "to": "add_new_audit_trail",
-            "connection": {
-                "output": "fund_id, fund_data.status",
-                "input": "reference_id, old_value"
-            }
-            },
-            {
-            "from": "instruction",
-            "to": "add_new_audit_trail",
-            "connection": {
-                "output": "action, field_name, new_value, reference_type",
-                "input": "action, field_name, new_value, reference_type"
-            }
-            }
-        ],
-        "num_edges": 8,
+    "edges": [
+    {
+      "from": "instruction",
+      "to": "search_user_entities",
+      "connection": {
+        "output": "entity_type, email",
+        "input": "entity_type, filters.email"
+      }
+    },
+    {
+      "from": "instruction",
+      "to": "search_fund_entities",
+      "connection": {
+        "output": "entity_type, name",
+        "input": "entity_type, filters.name"
+      }
+    },
+    {
+      "from": "instruction",
+      "to": "check_approval",
+      "connection": {
+        "output": "action",
+        "input": "action"
+      }
+    },
+    {
+      "from": "search_user_entities",
+      "to": "check_approval",
+      "connection": {
+        "output": "results[0].email",
+        "input": "requester_email"
+      }
+    },
+    {
+      "from": "instruction",
+      "to": "handle_fund",
+      "connection": {
+        "output": "action, status",
+        "input": "action, fund_data.status"
+      }
+    },
+    {
+      "from": "check_approval",
+      "to": "handle_fund",
+      "connection": {
+        "output": "approval_valid, approval_valid",
+        "input": "fund_data.fund_manager_approval, fund_data.compliance_officer_approval"
+      }
+    },
+    {
+      "from": "search_fund_entities",
+      "to": "handle_fund",
+      "connection": {
+        "output": "results[0].fund_id, results[0].fund_type, results[0].manager_id, results[0].name, results[0].size",
+        "input": "fund_id, fund_data.fund_type, fund_data.manager_id, fund_data.name, fund_data.size"
+      }
+    },
+    {
+      "from": "instruction",
+      "to": "add_new_audit_trail",
+      "connection": {
+        "output": "action, field_name, reference_type",
+        "input": "action, field_name, reference_type"
+      }
+    },
+    {
+      "from": "handle_fund",
+      "to": "add_new_audit_trail",
+      "connection": {
+        "output": "fund_data.status, fund_id",
+        "input": "new_value, reference_id"
+      }
+    },
+    {
+      "from": "search_fund_entities",
+      "to": "add_new_audit_trail",
+      "connection": {
+        "output": "results[0].status",
+        "input": "old_value"
+      }
+    }
+  ],
+        "num_edges": 10,
         "outputs": [
             "23",
             "update",
