@@ -7,7 +7,7 @@
     "interface_num": 2,
     "task": {
         "user_id": "23",
-        "instruction": "You are Jason Porter (email: jporter@hotmail.com). You are required to close the Private Equity Fund named Sandoval PLC Strategic Fund and ensure this change is properly documented for compliance purposes.",
+        "instruction": "You are Jason Porter (email: jporter@hotmail.com). You are required to close the Private Equity Fund named Sandoval PLC Strategic Fund.",
         "actions": [
             {
             "name": "search_user_entities",
