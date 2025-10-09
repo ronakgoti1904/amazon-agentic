@@ -6,15 +6,15 @@
     "temperature": 1,
     "interface_num": 2,
     "task": {
-        "user_id": "111",
-        "instruction": "You are William Estrada (email: william.estrada@investment.com). You need to create a new fund name Motilal Oswal Tax Fund and type is bond_funds and create a new subscription on newly created fund with amount 1000 and assigned investor Sweeney Ltd and ensure all compliance requirements are met.",
+        "user_id": "109",
+        "instruction": "You are Michael Jones (email: michaeljones285@hotmail.com). Create a new bond fund named Motilal Oswal Tax Fund, and then create a subscription for an amount of 1000 assigning it to the investor Sweeney Ltd",
         "actions": [
         {
           "name": "search_user_entities",
           "arguments": {
             "entity_type": "users",
             "filters": {
-              "email": "william.estrada@investment.com"
+              "email": "michaeljones285@hotmail.com"
             }
           },
           "output": {
@@ -22,15 +22,15 @@
             "entity_type": "users",
             "results": [
               {
-                "created_at": "2024-01-05T20:13:22",
-                "email": "william.estrada@investment.com",
-                "first_name": "William",
-                "last_name": "Estrada",
-                "role": "fund_manager",
+                "created_at": "2025-06-13T23:49:06",
+                "email": "michaeljones285@hotmail.com",
+                "first_name": "Michael",
+                "last_name": "Jones",
+                "role": "compliance_officer",
                 "status": "active",
-                "timezone": "America/New_York",
-                "updated_at": "2024-11-13T09:30:34",
-                "user_id": "111"
+                "timezone": "UTC",
+                "updated_at": "2025-07-16T01:14:24",
+                "user_id": "109"
               }
             ],
             "success": true
@@ -40,11 +40,14 @@
           "name": "check_approval",
           "arguments": {
             "action": "fund_management_setup",
-            "requester_email": "william.estrada@investment.com"
+            "requester_email": "michaeljones285@hotmail.com"
           },
           "output": {
             "approval_valid": true,
-            "message": "Role 'fund_manager' is directly authorized for action 'fund_management_setup'"
+            "approved_by": [
+              "fund_manager",
+              "compliance_officer"
+            ]
           }
         },
         {
@@ -55,8 +58,8 @@
               "name": "Motilal Oswal Tax Fund",
               "fund_type": "bond_funds",
               "manager_id": "86",
-              "fund_manager_approval": "fund_management_maintenance_1",
-              "compliance_officer_approval": "fund_management_maintenance_1"
+              "fund_manager_approval": true,
+              "compliance_officer_approval": true
             }
           },
           "output": {
@@ -99,11 +102,11 @@
           "name": "check_approval",
           "arguments": {
             "action": "subscription_management",
-            "requester_email": "william.estrada@investment.com"
+            "requester_email": "michaeljones285@hotmail.com"
           },
           "output": {
             "approval_valid": true,
-            "message": "Role 'fund_manager' is directly authorized for action 'subscription_management'"
+            "message": "Role 'compliance_officer' is directly authorized for action 'subscription_management'"
           }
         },
         {
@@ -144,8 +147,8 @@
               "fund_id": "101",
               "investor_id": "60",
               "amount": 1000,
-              "request_assigned_to": "111",
-              "request_date": "2025-10-08",
+              "request_assigned_to": "109",
+              "request_date": "2025-10-09",
               "fund_manager_approval": true,
               "compliance_officer_approval": true
             }
@@ -158,8 +161,8 @@
               "approval_date": null,
               "fund_id": "101",
               "investor_id": "60",
-              "request_assigned_to": "111",
-              "request_date": "2025-10-08",
+              "request_assigned_to": "109",
+              "request_date": "2025-10-09",
               "status": "pending",
               "subscription_id": "2501",
               "updated_at": "2025-10-01T00:00:00"
@@ -187,125 +190,129 @@
           }
         }
       ],
-        "edges": [
-          {
-            "from": "instruction",
-            "to": "search_user_entities",
-            "connection": {
-              "output": "entity_type, email",
-              "input": "entity_type, email"
-            }
-          },
-          {
-            "from": "search_user_entities",
-            "to": "check_approval",
-            "connection": {
-              "output": "results[0].email",
-              "input": "requester_email"
-            }
-          },
-          {
-            "from": "instruction",
-            "to": "check_approval",
-            "connection": {
-              "output": "action",
-              "input": "action"
-            }
-          },
-          {
-            "from": "instruction",
-            "to": "handle_fund",
-            "connection": {
-              "output": "action, name, fund_type, manager_id, fund_manager_approval, compliance_officer_approval",
-              "input": "action, fund_data.name, fund_data.fund_type, fund_data.manager_id, fund_data.fund_manager_approval, fund_data.compliance_officer_approval"
-            }
-          },
-          {
-            "from": "handle_fund",
-            "to": "add_new_audit_trail",
-            "connection": {
-              "output": "fund_data.fund_id",
-              "input": "reference_id"
-            }
-          },
-          {
-            "from": "instruction",
-            "to": "add_new_audit_trail",
-            "connection": {
-              "output": "action, reference_type",
-              "input": "action, reference_type"
-            }
-          },
-          {
-            "from": "search_user_entities",
-            "to": "check_approval",
-            "connection": {
-              "output": "results[0].email",
-              "input": "requester_email"
-            }
-          },
-          {
-            "from": "instruction",
-            "to": "search_investor_entities",
-            "connection": {
-              "output": "entity_type, name",
-              "input": "entity_type, name"
-            }
-          },
-          {
-            "from": "handle_fund",
-            "to": "handle_subscription",
-            "connection": {
-              "output": "fund_data.fund_id",
-              "input": "subscription_data.fund_id"
-            }
-          },
-          {
-            "from": "search_investor_entities",
-            "to": "handle_subscription",
-            "connection": {
-              "output": "results[0].investor_id",
-              "input": "subscription_data.investor_id"
-            }
-          },
-          {
-            "from": "search_user_entities",
-            "to": "handle_subscription",
-            "connection": {
-              "output": "results[0].user_id",
-              "input": "subscription_data.request_assigned_to"
-            }
-          },
-          {
-            "from": "check_approval",
-            "to": "handle_subscription",
-            "connection": {
-              "output": "approval_valid, approval_valid",
-              "input": "subscription_data.fund_manager_approval, subscription_data.compliance_officer_approval"
-            }
-          },
-          {
-            "from": "instruction",
-            "to": "handle_subscription",
-            "connection": {
-              "output": "action, amount, request_date",
-              "input": "action, subscription_data.amount, subscription_data.request_date"
-            }
-          },
-          {
-            "from": "handle_subscription",
-            "to": "add_new_audit_trail",
-            "connection": {
-              "output": "subscription_id",
-              "input": "reference_id"
-            }
-          }
-        ],
-        "num_edges": 14,
-        "outputs": [
-            "101",
-            "update",
-            "2501"
-        ]
+      "outputs": ["101", "create", "2501", "3502"],
+      "edges": [
+      {
+        "from": "instruction",
+        "to": "search_user_entities",
+        "connection": {
+          "output": "entity_type, results[0].email",
+          "input": "entity_type, filters.email"
+        }
+      },
+      {
+      "from": "instruction",
+      "to": "check_approval",
+      "connection": {
+        "output": "approval_valid",
+        "input": "action"
+      }
+    },
+      {
+        "from": "search_user_entities",
+        "to": "check_approval",
+        "connection": {
+          "output": "results[0].email",
+          "input": "requester_email"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "handle_fund",
+        "connection": {
+          "output": "action, fund_data.name, fund_data.fund_type, fund_data.manager_id",
+          "input": "action, fund_data.name, fund_data.fund_type, fund_data.manager_id"
+        }
+      },
+      {
+        "from": "check_approval",
+        "to": "handle_fund",
+        "connection": {
+          "output": "approval_valid, approval_valid",
+          "input": "fund_data.fund_manager_approval, fund_data.compliance_officer_approval"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "add_new_audit_trail",
+        "connection": {
+          "output": "action, reference_type",
+          "input": "action, reference_type"
+        }
+      },
+      {
+        "from": "handle_fund",
+        "to": "add_new_audit_trail",
+        "connection": {
+          "output": "fund_id",
+          "input": "reference_id"
+        }
+      },
+      {
+        "from": "search_user_entities",
+        "to": "check_approval",
+        "connection": {
+          "output": "results[0].email",
+          "input": "requester_email"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "search_investor_entities",
+        "connection": {
+          "output": "entity_type, name",
+          "input": "entity_type, filters.name"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "handle_subscription",
+        "connection": {
+          "output": "action, amount, request_date",
+          "input": "action, subscription_data.amount, subscription_data.request_date"
+        }
+      },
+      {
+        "from": "handle_fund",
+        "to": "handle_subscription",
+        "connection": {
+          "output": "fund_id",
+          "input": "subscription_data.fund_id"
+        }
+      },
+      {
+        "from": "search_investor_entities",
+        "to": "handle_subscription",
+        "connection": {
+          "output": "results[0].investor_id",
+          "input": "subscription_data.investor_id"
+        }
+      },
+      {
+        "from": "search_user_entities",
+        "to": "handle_subscription",
+        "connection": {
+          "output": "results[0].user_id",
+          "input": "subscription_data.request_assigned_to"
+        }
+      },
+      {
+        "from": "check_approval",
+        "to": "handle_subscription",
+        "connection": {
+          "output": "approval_valid, approval_valid",
+          "input": "subscription_data.fund_manager_approval, subscription_data.compliance_officer_approval"
+        }
+      },
+      {
+        "from": "handle_subscription",
+        "to": "add_new_audit_trail",
+        "connection": {
+          "output": "subscription_id",
+          "input": "reference_id"
+        }
+      }
+    ],
+      "num_edges": 15
     }
 }
