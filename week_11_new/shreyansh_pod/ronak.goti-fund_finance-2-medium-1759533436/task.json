@@ -7,7 +7,7 @@
   "interface_num": 2,
   "task": {
     "user_id": "23",
-    "instruction": "You are Jason Porter (email: jporter@hotmail.com). I want to update the status of the Private Equity Fund named Sandoval PLC Strategic Fund from open to close which is managed by Joseph Brennan(email: joseph.brennan@yahoo.com).",
+    "instruction": "You are Jason Porter (email: jporter@hotmail.com). I want to update the status of the Private Equity Fund named 'Sandoval PLC Strategic Fund' from open to close which is managed by Joseph Brennan(email: joseph.brennan@yahoo.com).",
     "actions": [
       {
         "name": "search_user_entities",
