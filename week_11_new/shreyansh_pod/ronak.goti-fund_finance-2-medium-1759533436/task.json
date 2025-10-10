@@ -7,7 +7,7 @@
   "interface_num": 2,
   "task": {
     "user_id": "23",
-    "instruction": "You are Jason Porter (email: jporter@hotmail.com). I want to update the status of the Private Equity Fund named 'Sandoval PLC Strategic Fund' from open to close which is managed by Joseph Brennan(email: joseph.brennan@yahoo.com).",
+    "instruction": "You are Jason Porter (email: jporter@hotmail.com). I want to update the status of the Private Equity Fund named Sandoval PLC Strategic Fund from open to close.",
     "actions": [
       {
         "name": "search_user_entities",
@@ -81,9 +81,6 @@
         "arguments": {
           "action": "update",
           "fund_data": {
-            "fund_type": "private_equity_funds",
-            "manager_id": "42",
-            "name": "Sandoval PLC Strategic Fund",
             "status": "closed",
             "fund_manager_approval": true,
             "compliance_officer_approval": true
@@ -178,8 +175,8 @@
         "from": "search_fund_entities",
         "to": "handle_fund",
         "connection": {
-          "output": "results[0].fund_id, results[0].fund_type, results[0].manager_id, results[0].name",
-          "input": "fund_id, fund_data.fund_type, fund_data.manager_id, fund_data.name"
+          "output": "results[0].fund_id",
+          "input": "fund_id"
         }
       },
       {
