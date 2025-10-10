@@ -1,0 +1,201 @@
+{
+  "env": "fund_finance",
+  "model_provider": "fireworks",
+  "model": "qwen3-coder-480b-a35b-instruct",
+  "num_trials": 1,
+  "temperature": 1,
+  "interface_num": 2,
+  "task": {
+    "user_id": "23",
+    "instruction": "You are Jason Porter (email: jporter@hotmail.com). I want to update the status of the Private Equity Fund named Sandoval PLC Strategic Fund from open to close.",
+    "actions": [
+      {
+        "name": "search_user_entities",
+        "arguments": {
+          "entity_type": "users",
+          "filters": {
+            "email": "jporter@hotmail.com"
+          }
+        },
+        "output": {
+          "count": 1,
+          "entity_type": "users",
+          "results": [
+            {
+              "created_at": "2025-05-11T18:29:51",
+              "email": "jporter@hotmail.com",
+              "first_name": "Jason",
+              "last_name": "Porter",
+              "role": "trader",
+              "status": "active",
+              "timezone": "UTC",
+              "updated_at": "2025-06-25T07:41:59",
+              "user_id": "23"
+            }
+          ],
+          "success": true
+        }
+      },
+      {
+        "name": "search_fund_entities",
+        "arguments": {
+          "entity_type": "funds",
+          "filters": {
+            "name": "Sandoval PLC Strategic Fund"
+          }
+        },
+        "output": {
+          "count": 1,
+          "entity_type": "funds",
+          "results": [
+            {
+              "created_at": "2024-05-05T23:58:51",
+              "fund_id": "77",
+              "fund_type": "private_equity_funds",
+              "manager_id": "42",
+              "name": "Sandoval PLC Strategic Fund",
+              "size": 339204464.85,
+              "status": "open",
+              "updated_at": "2025-06-09T16:45:00"
+            }
+          ],
+          "success": true
+        }
+      },
+      {
+        "name": "check_approval",
+        "arguments": {
+          "action": "fund_management_maintenance",
+          "requester_email": "jporter@hotmail.com"
+        },
+        "output": {
+          "approval_valid": true,
+          "approved_by": [
+            "fund_manager",
+            "compliance_officer"
+          ]
+        }
+      },
+      {
+        "name": "handle_fund",
+        "arguments": {
+          "action": "update",
+          "fund_data": {
+            "status": "closed",
+            "fund_manager_approval": true,
+            "compliance_officer_approval": true
+          },
+          "fund_id": "77"
+        },
+        "output": {
+          "action": "update",
+          "fund_data": {
+            "created_at": "2024-05-05T23:58:51",
+            "fund_id": "77",
+            "fund_type": "private_equity_funds",
+            "manager_id": "42",
+            "name": "Sandoval PLC Strategic Fund",
+            "size": 339204464.85,
+            "status": "closed",
+            "updated_at": "2025-10-01T12:00:00"
+          },
+          "fund_id": "77",
+          "message": "Fund 77 updated successfully",
+          "success": true
+        }
+      },
+      {
+        "name": "add_new_audit_trail",
+        "arguments": {
+          "action": "update",
+          "field_name": "status",
+          "new_value": "closed",
+          "old_value": "open",
+          "reference_id": "77",
+          "reference_type": "fund"
+        },
+        "output": {
+          "action": "update",
+          "audit_trail_id": "3501",
+          "created_at": "2025-10-01T00:00:00",
+          "field_name": "status",
+          "new_value": "closed",
+          "old_value": "open",
+          "reference_id": "77",
+          "reference_type": "fund"
+        }
+      }
+    ],
+    "outputs": [
+      "3501",
+      "77"
+    ],
+    "edges": [
+      {
+        "from": "instruction",
+        "to": "search_user_entities",
+        "connection": {
+          "output": "entity_type, email",
+          "input": "entity_type, filters.email"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "search_fund_entities",
+        "connection": {
+          "output": "entity_type, name",
+          "input": "entity_type, filters.name"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "check_approval",
+        "connection": {
+          "output": "action, email",
+          "input": "action, requester_email"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "handle_fund",
+        "connection": {
+          "output": "action, status",
+          "input": "action, fund_data.status"
+        }
+      },
+      {
+        "from": "check_approval",
+        "to": "handle_fund",
+        "connection": {
+          "output": "approval_valid, approval_valid",
+          "input": "fund_data.fund_manager_approval, fund_data.compliance_officer_approval"
+        }
+      },
+      {
+        "from": "search_fund_entities",
+        "to": "handle_fund",
+        "connection": {
+          "output": "results[0].fund_id",
+          "input": "fund_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "add_new_audit_trail",
+        "connection": {
+          "output": "action, field_name, reference_type, old_value, new_value",
+          "input": "action, field_name, reference_type, old_value, new_value"
+        }
+      },
+      {
+        "from": "handle_fund",
+        "to": "add_new_audit_trail",
+        "connection": {
+          "output": "fund_id",
+          "input": "reference_id"
+        }
+      }
+    ],
+    "num_edges": 8
+  }
+}
