@@ -7,7 +7,7 @@
   "interface_num": 2,
   "task": {
     "user_id": "122",
-    "instruction": "You are Stanley Mercado (email: smercado@hotmail.com). Create a private equity instrument named 'RM Group' with the ticker 'MRG8'. Then, execute a sell trade on October 10, 2025, using the bond instrument 'RM Group' under the Infrastructure Fund 'Lloyd, Mckinney and Collins Balanced Fund', with a quantity of 100 units at a price of 200 per unit.After the trade execution, send an alert notification to the Fund Manager and Compliance Officer (both roles associated with smercado@hotmail.com)",
+    "instruction": "You are Stanley Mercado (email: smercado@hotmail.com). You want to create a private equity instrument named 'RM Group' with the ticker 'MRG8' and execute a sell trade on October 10, 2025, using the bond instrument 'RM Group' under the Infrastructure Fund 'Lloyd, Mckinney and Collins Balanced Fund', with a quantity of 100 units at a price of 200 per unit and send an alert notification to yourself only.",
     "actions": [
       {
         "name": "search_user_entities",
@@ -137,31 +137,6 @@
         }
       },
       {
-        "name": "search_instrument_entities",
-        "arguments": {
-          "entity_type": "instruments",
-          "filters": {
-            "name": "RM Group"
-          }
-        },
-        "output": {
-          "count": 1,
-          "entity_type": "instruments",
-          "results": [
-            {
-              "created_at": "2025-10-01T00:00:00",
-              "instrument_id": "201",
-              "instrument_type": "private_equity",
-              "name": "RM Group",
-              "status": "active",
-              "ticker": "MRG8",
-              "updated_at": "2025-10-01T00:00:00"
-            }
-          ],
-          "success": true
-        }
-      },
-      {
         "name": "perform_trade",
         "arguments": {
           "fund_id": "81",
@@ -279,7 +254,7 @@
         "from": "instruction",
         "to": "search_instrument_entities",
         "connection": {
-          "output": "entity_type, count",
+          "output": "entity_type, ticker",
           "input": "entity_type, filters.ticker"
         }
       },
@@ -319,15 +294,7 @@
         "from": "instruction",
         "to": "search_fund_entities",
         "connection": {
-          "output": "entity_type, fund_id",
-          "input": "entity_type, filters.name"
-        }
-      },
-      {
-        "from": "handle_instrument",
-        "to": "search_instrument_entities",
-        "connection": {
-          "output": "entity_type, instrument_id",
+          "output": "entity_type, name",
           "input": "entity_type, filters.name"
         }
       },
@@ -348,7 +315,7 @@
         }
       },
       {
-        "from": "search_instrument_entities",
+        "from": "handle_instrument",
         "to": "perform_trade",
         "connection": {
           "output": "results[0].instrument_id",
@@ -367,7 +334,7 @@
         "from": "perform_trade",
         "to": "add_new_audit_trail",
         "connection": {
-          "output": "trade_data.trade_id",
+          "output": "trade_id",
           "input": "reference_id"
         }
       },
@@ -396,6 +363,6 @@
         }
       }
     ],
-    "num_edges": 17
+    "num_edges": 16
   }
 }
