@@ -7,7 +7,7 @@
   "interface_num": 2,
   "task": {
     "user_id": "122",
-    "instruction": "You are Stanley Mercado (email: smercado@hotmail.com). You want to create a private equity instrument named 'RM Group' with the ticker 'MRG8' and execute a sell trade on October 10, 2025, using the bond instrument 'RM Group' under the Infrastructure Fund 'Lloyd, Mckinney and Collins Balanced Fund', with a quantity of 100 units at a price of 200 per unit and send an alert notification to yourself only.",
+    "instruction": "You are Stanley Mercado (email: smercado@hotmail.com). You want to create a private equity instrument named 'RM Group' with the ticker 'MRG8' and execute a sell trade on October 10, 2025, using the private equity instrument 'RM Group' under the Infrastructure Fund 'Lloyd, Mckinney and Collins Balanced Fund', with a quantity of 100 units at a price of 200 per unit and send an alert notification to yourself only.",
     "actions": [
       {
         "name": "search_user_entities",
