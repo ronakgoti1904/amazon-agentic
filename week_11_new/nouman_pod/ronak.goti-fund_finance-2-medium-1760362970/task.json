@@ -1,0 +1,345 @@
+{
+  "env": "fund_finance",
+  "model_provider": "fireworks",
+  "model": "qwen3-coder-480b-a35b-instruct",
+  "num_trials": 1,
+  "temperature": 1,
+  "interface_num": 2,
+  "task": {
+    "user_id": "5",
+    "instruction": "You are Craig Ramirez (email: craigramirez@investment.com). You want to update the instrument 'Decker Inc Holdings' on February 19, 2025, by changing the open price from 123.2824 to 122.1453, the close price from 120.9357 to 119.4532, the low price from 116.6883 to 118.7854, and the high price from 129.9167 to 125.4356",
+    "actions": [
+      {
+        "name": "search_user_entities",
+        "arguments": {
+          "entity_type": "users",
+          "filters": {
+            "email": "craigramirez@investment.com"
+          }
+        },
+        "output": {
+          "count": 1,
+          "entity_type": "users",
+          "results": [
+            {
+              "created_at": "2025-04-30T15:16:35",
+              "email": "craigramirez@investment.com",
+              "first_name": "Craig",
+              "last_name": "Ramirez",
+              "role": "compliance_officer",
+              "status": "active",
+              "timezone": "UTC",
+              "updated_at": "2025-07-10T11:31:03",
+              "user_id": "15"
+            }
+          ],
+          "success": true
+        }
+      },
+      {
+        "name": "check_approval",
+        "arguments": {
+          "action": "instrument_price_updates",
+          "requester_email": "craigramirez@investment.com"
+        },
+        "output": {
+          "approval_valid": true,
+          "approved_by": [
+            "fund_manager",
+            "compliance_officer"
+          ]
+        }
+      },
+      {
+        "name": "search_instrument_entities",
+        "arguments": {
+          "entity_type": "instruments",
+          "filters": {
+            "name": "Decker Inc Holdings"
+          }
+        },
+        "output": {
+          "count": 1,
+          "entity_type": "instruments",
+          "results": [
+            {
+              "instrument_id": "33",
+              "instrument_type": "bonds",
+              "name": "Decker Inc Holdings",
+              "status": "active",
+              "ticker": "ALF4"
+            }
+          ],
+          "success": true
+        }
+      },
+      {
+        "name": "search_valuation_entities",
+        "arguments": {
+          "entity_type": "instrument_prices",
+          "filters": {
+            "instrument_id": "33"
+          }
+        },
+        "output": {
+          "count": 13,
+          "entity_type": "instrument_prices",
+          "results": [
+            {
+              "close_price": 132.5364,
+              "high_price": 142.6252,
+              "instrument_id": "33",
+              "low_price": 132.272,
+              "open_price": 141.4903,
+              "price_date": "2024-10-22",
+              "price_id": "379"
+            },
+            {
+              "close_price": 132.1654,
+              "high_price": 134.1891,
+              "instrument_id": "33",
+              "low_price": 123.1076,
+              "open_price": 131.6416,
+              "price_date": "2024-10-28",
+              "price_id": "380"
+            },
+            {
+              "close_price": 137.3438,
+              "high_price": 142.4332,
+              "instrument_id": "33",
+              "low_price": 126.398,
+              "open_price": 134.8942,
+              "price_date": "2024-11-15",
+              "price_id": "381"
+            },
+            {
+              "close_price": 131.0752,
+              "high_price": 147.7616,
+              "instrument_id": "33",
+              "low_price": 130.3815,
+              "open_price": 138.2437,
+              "price_date": "2024-11-03",
+              "price_id": "382"
+            },
+            {
+              "close_price": 125.3978,
+              "high_price": 133.2775,
+              "instrument_id": "33",
+              "low_price": 123.8535,
+              "open_price": 131.8705,
+              "price_date": "2024-12-17",
+              "price_id": "383"
+            },
+            {
+              "close_price": 134.4757,
+              "high_price": 140.2266,
+              "instrument_id": "33",
+              "low_price": 125.199,
+              "open_price": 130.8497,
+              "price_date": "2024-11-26",
+              "price_id": "384"
+            },
+            {
+              "close_price": 138.6213,
+              "high_price": 139.3508,
+              "instrument_id": "33",
+              "low_price": 130.4055,
+              "open_price": 136.5297,
+              "price_date": "2024-12-21",
+              "price_id": "385"
+            },
+            {
+              "close_price": 145.7968,
+              "high_price": 146.4692,
+              "instrument_id": "33",
+              "low_price": 141.3955,
+              "open_price": 144.6243,
+              "price_date": "2024-12-31",
+              "price_id": "386"
+            },
+            {
+              "close_price": 137.1374,
+              "high_price": 142.0949,
+              "instrument_id": "33",
+              "low_price": 137.0275,
+              "open_price": 140.5582,
+              "price_date": "2025-01-18",
+              "price_id": "387"
+            },
+            {
+              "close_price": 136.4396,
+              "high_price": 144.3357,
+              "instrument_id": "33",
+              "low_price": 123.7276,
+              "open_price": 133.7276,
+              "price_date": "2024-11-09",
+              "price_id": "388"
+            },
+            {
+              "close_price": 133.3146,
+              "high_price": 141.9648,
+              "instrument_id": "33",
+              "low_price": 131.9262,
+              "open_price": 140.0027,
+              "price_date": "2024-12-01",
+              "price_id": "389"
+            },
+            {
+              "close_price": 129.6469,
+              "high_price": 133.9957,
+              "instrument_id": "33",
+              "low_price": 128.8833,
+              "open_price": 133.2432,
+              "price_date": "2024-12-16",
+              "price_id": "390"
+            },
+            {
+              "close_price": 120.9357,
+              "high_price": 129.9167,
+              "instrument_id": "33",
+              "low_price": 116.6883,
+              "open_price": 123.2824,
+              "price_date": "2025-02-19",
+              "price_id": "391"
+            }
+          ],
+          "success": true
+        }
+      },
+      {
+        "name": "handle_instrument_price",
+        "arguments": {
+          "action": "update",
+          "price_data": {
+            "close_price": 119.4532,
+            "high_price": 125.4356,
+            "low_price": 118.7854,
+            "open_price": 122.1453,
+            "fund_manager_approval": true,
+            "compliance_officer_approval": true
+          },
+          "price_id": "391"
+        },
+        "output": {
+          "action": "update",
+          "message": "Instrument price 391 updated successfully",
+          "price_data": {
+            "close_price": 119.4532,
+            "high_price": 125.4356,
+            "instrument_id": "33",
+            "low_price": 118.7854,
+            "open_price": 122.1453,
+            "price_date": "2025-02-19",
+            "price_id": "391"
+          },
+          "price_id": "391",
+          "success": true
+        }
+      },
+      {
+        "name": "add_new_audit_trail",
+        "arguments": {
+          "action": "create",
+          "reference_id": "391",
+          "reference_type": "instrument_price"
+        },
+        "output": {
+          "action": "create",
+          "audit_trail_id": "3501",
+          "created_at": "2025-10-01T00:00:00",
+          "field_name": null,
+          "new_value": null,
+          "old_value": null,
+          "reference_id": "391",
+          "reference_type": "instrument_price"
+        }
+      }
+    ],
+    "outputs": [
+      "391"
+    ],
+    "edges": [
+      {
+        "from": "instruction",
+        "to": "search_user_entities",
+        "connection": {
+          "output": "entity_type, email",
+          "input": "entity_type, filters.email"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "check_approval",
+        "connection": {
+          "output": "action, email",
+          "input": "action,requester_email"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "search_instrument_entities",
+        "connection": {
+          "output": "entity_type, name",
+          "input": "entity_type, filters.name"
+        }
+      },
+      {
+        "from": "search_instrument_entities",
+        "to": "search_valuation_entities",
+        "connection": {
+          "output": "results[0].instrument_id",
+          "input": "instrument_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "search_valuation_entities",
+        "connection": {
+            "output": "entity_type",
+            "input": "entity_type"
+        }
+      },
+      {
+        "from": "search_valuation_entities",
+        "to": "handle_instrument_price",
+        "connection": {
+          "output": "results[12].price_id",
+          "input": "price_id"
+        }
+      },
+      {
+        "from": "check_approval",
+        "to": "handle_instrument_price",
+        "connection": {
+          "output": "approval_valid, approval_valid",
+          "input": "fund_manager_approval, compliance_officer_approval"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "handle_instrument_price",
+        "connection": {
+          "output": "action, close_price, high_price, low_price, open_price",
+          "input": "action, close_price, high_price, low_price, open_price"
+        }
+      },
+      {
+        "from": "handle_instrument_price",
+        "to": "add_new_audit_trail",
+        "connection": {
+          "output": "price_id",
+          "input": "reference_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "add_new_audit_trail",
+        "connection": {
+          "output": "action, reference_type",
+          "input": "action, reference_type"
+        }
+      }
+    ],
+    "num_edges": 10
+  }
+}
