@@ -230,8 +230,7 @@
     ],
     "outputs": [
       "201",
-      "2501",
-      "1501"
+      "2501"
     ],
     "edges": [
       {
@@ -326,7 +325,7 @@
         "from": "instruction",
         "to": "perform_trade",
         "connection": {
-          "output": "trade_data.price, trade_data.quantity, trade_data.side, trade_data.trade_date",
+          "output": "price, quantity, side, trade_date",
           "input": "price, quantity, side, trade_date"
         }
       },
@@ -343,14 +342,14 @@
         "to": "handle_notifications",
         "connection": {
           "output": "results[0].email",
-          "input": "email"
+          "input": "notification_data.email"
         }
       },
       {
         "from": "instruction",
         "to": "handle_notifications",
         "connection": {
-          "output": "notification_data.action, notification_data.type, notification_data.class",
+          "output": "action, type, class",
           "input": "action, type, class"
         }
       },
