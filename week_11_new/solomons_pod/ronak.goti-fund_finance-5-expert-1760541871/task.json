@@ -7,7 +7,7 @@
   "interface_num": 5,
   "task": {
     "user_id": "24",
-    "instruction": "You are Douglas Taylor (email: dtaylor@gmail.com), a compliance officer. You want to update the size of the 'Lloyd, Mckinney and Collins Balanced Fund' infrastructure fund from 251395586.37 to 251497586.23. You also want to create a performance report for the same fund with report date '2025-10-15' and export period end '2025-10-15' and send the report notification to yourself.",
+    "instruction": "You are Douglas Taylor (email: dtaylor@gmail.com), a compliance officer. You want to update the size of the 'Lloyd, Mckinney and Collins Balanced Fund' infrastructure fund from 251395586.37 to 251497586.23. You also want to create a performance report for the same fund with report date '2025-10-15' and export period end '2025-10-15', and send a report notification to yourself.",
     "actions": [
     {
       "name": "get_user_entities",
@@ -107,17 +107,20 @@
     {
       "name": "generate_new_audit_trail",
       "arguments": {
-        "action": "create",
+        "action": "update",
+        "field_name": "size",
+        "new_value": "251497586.23",
+        "old_value": "251395586.37",
         "reference_id": "81",
         "reference_type": "fund"
       },
       "output": {
-        "action": "create",
+        "action": "update",
         "audit_trail_id": "3501",
         "created_at": "2025-10-01T00:00:00",
-        "field_name": null,
-        "new_value": null,
-        "old_value": null,
+        "field_name": "status",
+        "new_value": "251497586.23",
+        "old_value": "251395586.37",
         "reference_id": "81",
         "reference_type": "fund"
       }
@@ -297,8 +300,8 @@
       "from": "instruction",
       "to": "generate_new_audit_trail",
       "connection": {
-        "output": "action, reference_type",
-        "input": "action, reference_type"
+        "output": "action, reference_type, field_name, old_value, new_value",
+        "input": "action, reference_type, field_name, old_value, new_value"
       }
     },
     {
@@ -358,19 +361,11 @@
       }
     },
     {
-      "from": "get_user_entities",
-      "to": "process_notifications",
-      "connection": {
-        "output": "results[0].email",
-        "input": "notification_data.email"
-      }
-    },
-    {
       "from": "instruction",
       "to": "process_notifications",
       "connection": {
-        "output": "action, type, class",
-        "input": "action, notification_data.type, notification_data.class"
+        "output": "action, email, type, class",
+        "input": "action, notification_data.email, notification_data.type, notification_data.class"
       }
     },
     {
@@ -382,6 +377,6 @@
       }
     }
   ],
-    "num_edges": 18
+    "num_edges": 17
   }
 }
