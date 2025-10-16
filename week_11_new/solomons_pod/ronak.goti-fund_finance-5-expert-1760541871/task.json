@@ -7,7 +7,7 @@
   "interface_num": 5,
   "task": {
     "user_id": "24",
-    "instruction": "You are Douglas Taylor (email: dtaylor@gmail.com), a compliance officer. You want to update the size of the 'Lloyd, Mckinney and Collins Balanced Fund' infrastructure fund from 251395586.37 to 251497586.23. You also want to create a performance report for the same fund with report date '2025-10-15' and export period end '2025-10-15', and send a report notification to yourself.",
+    "instruction": "You are Douglas Taylor (email: dtaylor@gmail.com), a compliance officer. You want to update the size of the 'Lloyd, Mckinney and Collins Balanced Fund' infrastructure fund from 251395586.37 to 251497586.23. You also want to create a performance report for the same fund with a report date of '2025-10-15' and an export period end of '2025-10-15', and send a report notification to yourself.",
     "actions": [
     {
       "name": "get_user_entities",
